@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pdf Processor", "Pdf Processor\Pdf Processor.csproj", "{DD6C4F16-6E3C-4DF1-8BE6-276AF4722790}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EAE1346F-BEE4-4163-B0C3-20386F3109EC}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Amir\mhpark\mhparks-api\.editorconfig = ..\..\Amir\mhpark\mhparks-api\.editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD6C4F16-6E3C-4DF1-8BE6-276AF4722790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD6C4F16-6E3C-4DF1-8BE6-276AF4722790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD6C4F16-6E3C-4DF1-8BE6-276AF4722790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD6C4F16-6E3C-4DF1-8BE6-276AF4722790}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7D72C9F-8E77-40B0-AE8E-BC878A4BB02C}
+	EndGlobalSection
+EndGlobal
