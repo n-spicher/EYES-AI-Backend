@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using Pdf_Processor.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,24 @@ namespace Pdf_Processor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var environment = Configuration.GetValue<string>("Environment");
+
+            var connectionString = "";
+            if (environment == "development")
+            {
+                connectionString = Configuration.GetConnectionString("pdfprocessor");
+            }
+            else
+            {
+                connectionString = Configuration.GetConnectionString("pdfprocessor");
+            }
+            services.AddDbContext<ApplicationDbContext>(options =>
+              options.UseSqlServer(connectionString, opt =>
+              {
+                  opt.EnableRetryOnFailure();
+              })
+            );
+
             services.AddControllers()
                 .AddNewtonsoftJson(opts =>
                 {
