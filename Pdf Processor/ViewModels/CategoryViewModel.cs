@@ -8,6 +8,6 @@ namespace Pdf_Processor.ViewModels
     public class CategoryViewModel
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 }

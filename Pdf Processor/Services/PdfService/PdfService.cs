@@ -1,7 +1,8 @@
-﻿using PdfSharp.Pdf;
-using PdfSharp.Pdf.Content;
-using PdfSharp.Pdf.Content.Objects;
-using PdfSharp.Pdf.IO;
+﻿
+using PdfSharpCore.Pdf;
+using PdfSharpCore.Pdf.Content;
+using PdfSharpCore.Pdf.Content.Objects;
+using PdfSharpCore.Pdf.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;

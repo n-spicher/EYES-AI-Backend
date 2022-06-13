@@ -18,6 +18,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PdfSharpCore.Models;
+using Pdf_Processor.Helper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Pdf_Processor.Models;
 
 namespace Pdf_Processor
 {
@@ -51,6 +56,44 @@ namespace Pdf_Processor
               })
             );
 
+            services.AddIdentity<ApplicationUser, ApplicationRole>(config =>
+            {
+                config.SignIn.RequireConfirmedAccount = false;
+                config.User.RequireUniqueEmail = true;
+                config.Tokens.AuthenticatorIssuer = "JWT";
+
+                //for Email confirmation
+                config.SignIn.RequireConfirmedEmail = true;
+                //for email confirmation token valid time
+                config.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+                //for reset Password token valid time
+                config.Tokens.PasswordResetTokenProvider = "resetpassword";
+
+            }).AddDefaultTokenProviders()
+            .AddTokenProvider<EmailConfirmationTokenProvider<ApplicationUser>>("emailconfirmation")
+            .AddTokenProvider<ResetPasswordTokenProvider<ApplicationUser>>("resetpassword")
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //********jwt***********
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+           .AddJwtBearer(x =>
+           {
+               x.RequireHttpsMetadata = false;
+               x.SaveToken = true;
+               x.TokenValidationParameters = new TokenValidationParameters
+               {
+                   ValidateIssuerSigningKey = true,
+                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(ProjectConstants.AuthKey)),
+                   ValidateIssuer = false,
+                   ValidateAudience = false
+               };
+           });
+
             services.AddControllers()
                 .AddNewtonsoftJson(opts =>
                 {
@@ -69,6 +112,13 @@ namespace Pdf_Processor
                 });
             });
 
+            services.AddMvc(options =>
+            {
+                options.EnableEndpointRouting = false;
+            });
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Pdf_Processor", Version = "v1" });
@@ -80,20 +130,27 @@ namespace Pdf_Processor
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+            app.UseExceptionHandler("/exception");
+
+            //if (env.IsDevelopment())
+            //{
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pdf_Processor v1"));
-            }
+            //}
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            
 
             app.UseCors();
+
+            app.UseSession();
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseStaticFiles();
 

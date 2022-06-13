@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using Pdf_Processor.Services.AccountService;
 using Pdf_Processor.Services.CategoryService;
+using Pdf_Processor.Services.EmailService;
 using Pdf_Processor.Services.PdfService;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,10 @@ namespace Pdf_Processor
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             services.AddTransient<IPdfService, PdfService>();
-            services.AddTransient<ICategoryService, CategoryService>(); 
+            services.AddTransient<ICategoryService, CategoryService>();
+
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IAccountServices, AccountServices>();
 
 
             return services;

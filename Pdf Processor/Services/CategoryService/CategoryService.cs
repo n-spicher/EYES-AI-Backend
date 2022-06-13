@@ -23,8 +23,10 @@ namespace Pdf_Processor.Services.CategoryService
             try
             {
                 var categories = await this.context.Categories
-                    .Include(x => x.CategoryItems)
+                    .Include(x => x.CategoryItems.OrderBy(y => y.Name))
+                    .ThenInclude(x => x.CategoryItemSynonyms)
                     .Include(x => x.CategoryCodes)
+                    .OrderBy(x => x.Name)
                     .ToListAsync();
 
                 return categories;

@@ -10,7 +10,10 @@ namespace Pdf_Processor.ViewModels
     {
         [Required]
         public string Name { get; set; }
+        public string Note { get; set; }
         [Required]
         public int CategoryId { get; set; }
+
+        public List<string> CategoryItemSynonyms { get; set; }
     }
 }
